@@ -1,10 +1,18 @@
 #include <stdio.h>
 
-#define S "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+unsigned char base_ch[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 void encode(FILE *f_in, FILE *f_out)
 {
-
+    int ch[3];
+    char code[4];
+    for (int i = 0; i < 3; i++) ch[i] = getc(f_in);
+    code[0] = ch[0] >> 2;
+    code[1] = ((ch[0] & 0x03) << 4) | (ch[1] >> 4);
+    code[2] = ((ch[1] & 0x0F) << 2) | (ch[2] >> 6);
+    code[3] = ch[2] & 0x3F;
+    char encripted[3];
+    for (int i = 0; i < 3; i++) fprintf(f_out, "%c", code[i]);
 }
 
 void decode(FILE *f_in, FILE *f_out)
