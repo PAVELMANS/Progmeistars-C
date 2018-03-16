@@ -20,7 +20,7 @@ int main()
     }
 
     FILE *input = fopen("input.txt", "rb");
-    FILE *output = fopen("output.txt", "w");
+    FILE *output = fopen("output.txt", "wb");
 
 
     char *c;

@@ -12,59 +12,38 @@ struct node
     struct node *parent;
 };
 
-struct node *chars[byte];
-struct node *b[byte];
+struct node **chars;
 
-void sort(int low, int high)
+int comp(const void *i, const void *j)
 {
-    int mid;
+    return (*(struct node *)i).sum - (*(struct node *)j).sum;
+}
 
-    if(low < high) {
-        mid = (low + high) / 2;
-        sort(low, mid);
-        sort(mid+1, high);
-        merging(low, mid, high);
-    } else {
-        return;
+void construct()
+{
+    struct node *root;
+    for (int i = 0; i < byte - 1; i++) {
+        root->sum = chars[0]->sum + chars[0]->sum;
+        root->left = chars[0];
+        root->right = chars[1];
+        root->parent = NULL;
+        root->ch = 0;
+        chars[0]->parent = root;
+        chars[1]->parent = root;
+        chars[1] = root;
+        chars[0] = NULL;
+        chars++;
+        qsort(chars, byte - 1 - i, sizeof(struct node), comp);
     }
-}
-
-void merging(int low, int mid, int high)
-{
-
-    int l1, l2, i;
-    for (l1 = low, l2 = mid + 1, i = low; l1 <= mid && l2 <= high; i++) {
-        if(chars[l1]->sum <= chars[l2]->sum)
-            b[i] = chars[l1++];
-        else
-            b[i] = chars[l2++];
-    }
-
-    while(l1 <= mid)
-        b[i++] = chars[l1++];
-
-    while(l2 <= high)
-        b[i++] = chars[l2++];
-
-    for(i = low; i <= high; i++)
-        chars[i] = b[i];
-
-}
-
-void sort_chars()
-{
-    sort(0, byte-1);
-}
-
-void construct(struct node *root)
-{
-
 }
 
 int main()
 {
     FILE *input = fopen("input.txt", "rb");
     FILE *output = fopen("output.txt", "wb");
+
+    /*struct node *letters[256];
+    chars = malloc(sizeof(struct node) * 256);
 
     for (int i = 0; i < byte; i++) {
         chars[i] = (struct node *) malloc(sizeof(struct node));
@@ -73,14 +52,17 @@ int main()
         chars[i]->left = NULL;
         chars[i]->right = NULL;
         chars[i]->parent = NULL;
+        letters[i] = chars[i];
     }
 
     char c;
     while ((c = fgetc(input)) != EOF) chars[c]->sum++;
-    sort_chars();
+    //sort_chars();
+    qsort(chars, byte, sizeof(struct node), comp);
 
     struct node *root = NULL;
-    construct(root);
-
+    construct();
+    root = chars;
+*/
     return 0;
 }
