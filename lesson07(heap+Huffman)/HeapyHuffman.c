@@ -12,14 +12,6 @@ struct node
     struct node *parent;
 };
 
-void heapify(struct node *letters[])
-{
-    for (int i = (257 / 2); i >= 1; i--)
-    {
-        shift_down(letters, i, 257);
-    }
-}
-
 void shift_down(struct node *letters[], int shifting, int last)
 {
     unsigned min_child = 2 * shifting;
@@ -35,6 +27,14 @@ void shift_down(struct node *letters[], int shifting, int last)
         } else break;
     }
     letters[shifting] = letters[0];
+}
+
+void heapify(struct node *letters[])
+{
+    for (int i = (257 / 2); i >= 1; i--)
+    {
+        shift_down(letters, i, 257);
+    }
 }
 
 int main()
