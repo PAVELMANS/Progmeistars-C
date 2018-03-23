@@ -42,7 +42,7 @@ int main()
     FILE *input = fopen("input.txt", "rb");
     FILE *output = fopen("output.txt", "wb");
 
-    /*struct node *letters[256];
+    struct node *letters[257];
     chars = malloc(sizeof(struct node) * 256);
 
     for (int i = 0; i < byte; i++) {
@@ -63,6 +63,6 @@ int main()
     struct node *root = NULL;
     construct();
     root = chars;
-*/
+
     return 0;
 }
