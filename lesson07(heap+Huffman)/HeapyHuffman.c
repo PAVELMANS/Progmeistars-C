@@ -37,6 +37,11 @@ void heapify(struct node *letters[])
     }
 }
 
+int climb_up(struct node *letter)
+{
+
+}
+
 int main()
 {
     FILE *input = fopen("input.txt", "rb");
@@ -90,12 +95,30 @@ int main()
     } while (size-1);
 
     FILE *input_text = fopen("input.txt", "rb");
-    char ch;
+    FILE *output_text = fopen("output.txt", "wb");
+    char ch; int count = 0; char code = 0;
     do
     {
         ch = getc(input_text);
 
+        struct node *letter = keys[ch];
+        while (letter->parent)
+        {
+            if (letter->parent->right == letter) code = (1 << count) || code;
+            count ++;
+            if (count > 7)
+            {
+                fprintf(output_text, "%c", code);
+                code = 0;
+                count = 0;
+            }
+            letter = letter->parent;
+        }
+
     } while (ch != EOF);
+
+    fclose(input_text);
+    fclose(output_text);
 
     return 0;
 }
