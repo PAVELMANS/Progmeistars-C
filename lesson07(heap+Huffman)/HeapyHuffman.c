@@ -104,7 +104,7 @@ int main()
         struct node *letter = keys[ch];
         while (letter->parent)
         {
-            if (letter->parent->right == letter) code = (1 << count) || code;
+            if (letter->parent->right == letter) code = (1 << count) | code;
             count ++;
             if (count > 7)
             {
@@ -119,6 +119,15 @@ int main()
 
     fclose(input_text);
     fclose(output_text);
+
+    FILE *decoding_input = fopen("output.txt", "rb");
+    FILE *output_decoded = fopen("output_decoded.txt", "wb");
+
+    do {
+        ch = fgetc(decoding_input);
+
+    }
+
 
     return 0;
 }
