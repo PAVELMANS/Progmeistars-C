@@ -94,6 +94,8 @@ int main()
         shift_down(letters, 1, size);
     } while (size-1);
 
+
+
     FILE *input_text = fopen("input.txt", "rb");
     FILE *output_text = fopen("output.txt", "wb");
     char ch; int count = 0; char code = 0;
@@ -104,7 +106,7 @@ int main()
         struct node *letter = keys[ch];
         while (letter->parent)
         {
-            if (letter->parent->right == letter) code = (1 << count) | code;
+            if (letter->parent->right == letter) code = code | (1 << count);
             count ++;
             if (count > 7)
             {
@@ -123,10 +125,28 @@ int main()
     FILE *decoding_input = fopen("output.txt", "rb");
     FILE *output_decoded = fopen("output_decoded.txt", "wb");
 
-    do {
-        ch = fgetc(decoding_input);
+    //struct node *root = letters[1];
+    struct node *walker = letters[1];
 
-    }
+    int counter = 8;
+    do {
+        if (counter > 7)
+        {
+            ch = fgetc(decoding_input);
+            counter = 0;
+        }
+        if (ch & 1) walker = walker->right;
+        else walker = walker->left;
+
+        if (walker->ch > -2)
+        {
+            if (walker->ch == EOF) break;
+            fprintf(output_decoded, "%c", walker->ch);
+            walker = letters[1];
+        }
+        ch >>= 1;
+        counter++;
+    } while (ch != EOF);
 
 
     return 0;
